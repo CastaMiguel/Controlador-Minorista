@@ -45,12 +45,10 @@ app.get("/api/puestos", async (request, response) => {
     );
     response.json(rows);
   } catch (error) {
-    response
-      .status(500)
-      .json({
-        message: "No se pudieron consultar los puestos",
-        error: error.message,
-      });
+    response.status(500).json({
+      message: "No se pudieron consultar los puestos",
+      error: error.message,
+    });
   }
 });
 
@@ -107,12 +105,10 @@ app.put("/api/puestos/:id", async (request, response) => {
       return response.status(404).json({ message: "Puesto no encontrado" });
     response.json(rows[0]);
   } catch (error) {
-    response
-      .status(400)
-      .json({
-        message: "No se pudo actualizar el puesto",
-        error: error.message,
-      });
+    response.status(400).json({
+      message: "No se pudo actualizar el puesto",
+      error: error.message,
+    });
   }
 });
 

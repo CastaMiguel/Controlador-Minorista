@@ -48,10 +48,17 @@ export async function initializeDatabase() {
   await pool.query(
     "ALTER TABLE puestos MODIFY sector ENUM('Zapatos', 'Electronicos', 'Frutas y verduras', 'Restaurante', 'Tienda', 'Ropa', 'Varios') NOT NULL",
   );
-  const [[{ total }]] = await pool.query("SELECT COUNT(*) AS total FROM puestos");
-  const [[{ legacyDemo }]] = await pool.query("SELECT COUNT(*) AS legacyDemo FROM puestos WHERE numero IN ('F-021', 'R-008', 'FV-114', 'M-032', 'F-022', 'FV-115', 'R-009')");
+  const [[{ total }]] = await pool.query(
+    "SELECT COUNT(*) AS total FROM puestos",
+  );
+  const [[{ legacyDemo }]] = await pool.query(
+    "SELECT COUNT(*) AS legacyDemo FROM puestos WHERE numero IN ('F-021', 'R-008', 'FV-114', 'M-032', 'F-022', 'FV-115', 'R-009')",
+  );
   if (total === 0 || (total <= 7 && legacyDemo > 0)) {
-    if (legacyDemo > 0) await pool.query("DELETE FROM puestos WHERE numero IN ('F-021', 'R-008', 'FV-114', 'M-032', 'F-022', 'FV-115', 'R-009')");
+    if (legacyDemo > 0)
+      await pool.query(
+        "DELETE FROM puestos WHERE numero IN ('F-021', 'R-008', 'FV-114', 'M-032', 'F-022', 'FV-115', 'R-009')",
+      );
     await pool.query(`INSERT INTO puestos (numero, sector, arrendatario, contacto, estado) VALUES
       ('Z-001', 'Zapatos', 'Calzado Medellín', '300 456 7890', 'Ocupado'),
       ('Z-002', 'Zapatos', 'Pasos Urbanos', '310 445 2198', 'Ocupado'),
